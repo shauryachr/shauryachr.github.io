@@ -1,335 +1,283 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Shaurya's AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaurya's AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bg: #0f172a;
-    --card: rgba(255,255,255,0.05);
-    --text: #ffffff;
-    --accent: #3b82f6;
+:root{
+  --accent:#4f8cff;
+  --accent2:#00f2ff;
+  --bg:#070b18;
 }
 
-.light {
-    --bg: #f3f4f6;
-    --card: rgba(0,0,0,0.05);
-    --text: #111827;
-    --accent: #2563eb;
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:Poppins;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  overflow:hidden;
 }
 
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    transition: 0.4s;
-    overflow: hidden;
+/* PARTICLE GRID BACKGROUND */
+
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(79,140,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,140,255,0.08) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation:gridMove 20s linear infinite;
 }
 
-/* ===== INTRO ===== */
-#intro {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: var(--bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 9999;
+@keyframes gridMove{
+  from{background-position:0 0,0 0;}
+  to{background-position:0 40px,40px 0;}
 }
 
-.logo-text {
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    animation: fadeIn 1.5s ease;
+/* MOBILE FRAME */
+
+.phone{
+  width:380px;
+  height:720px;
+  border-radius:40px;
+  background:linear-gradient(145deg,#0d1428,#060a16);
+  box-shadow:0 0 60px rgba(0,242,255,0.25);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  backdrop-filter:blur(20px);
 }
 
-.loading-bar {
-    width: 0;
-    height: 3px;
-    background: var(--accent);
-    margin-top: 20px;
-    animation: load 3s forwards;
+/* HOLOGRAPHIC HEADER */
+
+header{
+  font-family:Orbitron;
+  text-align:center;
+  font-size:1.2rem;
+  letter-spacing:2px;
+  color:var(--accent2);
+  text-shadow:0 0 15px var(--accent2);
+  margin-bottom:10px;
 }
 
-@keyframes load {
-    from { width: 0; }
-    to { width: 220px; }
+/* AI ORB */
+
+.orb{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  margin:0 auto 10px;
+  background:radial-gradient(circle at 30% 30%,#00f2ff,#0044ff);
+  box-shadow:0 0 25px var(--accent2);
+  animation:orbIdle 3s infinite ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+@keyframes orbIdle{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
 }
 
-/* ===== LAYOUT ===== */
-.container {
-    max-width: 500px;
-    margin: auto;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+.orb.typing{
+  animation:orbPulse 0.8s infinite alternate;
 }
 
-.header {
-    text-align: center;
-    font-weight: 600;
-    font-size: 22px;
+@keyframes orbPulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
 }
 
-.toggle {
-    text-align: right;
-    cursor: pointer;
-    font-size: 14px;
-    margin-bottom: 10px;
+/* CHAT */
+
+.chat{
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
 }
 
-/* ===== ORB ===== */
-.orb {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    margin: 10px auto;
-    background: radial-gradient(circle at 30% 30%, var(--accent), #000);
-    transition: 0.3s;
+.message{
+  margin:10px 0;
+  padding:12px 16px;
+  border-radius:18px;
+  max-width:75%;
+  animation:fadeIn 0.4s ease;
+  backdrop-filter:blur(12px);
 }
 
-.orb.active {
-    transform: scale(1.2);
-    box-shadow: 0 0 40px var(--accent);
+.user{
+  background:var(--accent);
+  margin-left:auto;
 }
 
-/* ===== CHAT ===== */
-.chat {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    background: var(--card);
-    border-radius: 15px;
-    backdrop-filter: blur(12px);
+.bot{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(0,242,255,0.3);
 }
 
-.message {
-    margin-bottom: 12px;
-    line-height: 1.5;
+/* GLOW CARD */
+
+.glow-card{
+  box-shadow:
+    0 0 20px rgba(79,140,255,0.8),
+    0 0 40px rgba(0,242,255,0.4);
 }
 
-.user { text-align: right; color: var(--accent); }
-.bot { text-align: left; }
+/* TYPING INDICATOR */
 
-/* Typing indicator */
-.typing span {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    margin: 2px;
-    border-radius: 50%;
-    background: var(--text);
-    animation: bounce 1s infinite;
+.typing{
+  display:flex;
+  gap:6px;
+  margin:10px 0;
 }
 
-.typing span:nth-child(2){ animation-delay: 0.2s; }
-.typing span:nth-child(3){ animation-delay: 0.4s; }
-
-@keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent2);
+  animation:bounce 1s infinite;
 }
 
-/* Input */
-.input-panel {
-    display: flex;
-    margin-top: 10px;
+.dot:nth-child(2){animation-delay:0.2s;}
+.dot:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce{
+  0%,80%,100%{transform:scale(0.5);}
+  40%{transform:scale(1);}
 }
 
-input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: var(--card);
-    color: var(--text);
-    outline: none;
+/* INPUT */
+
+.input-area{
+  display:flex;
+  margin-top:10px;
 }
 
-button {
-    margin-left: 8px;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: var(--accent);
-    color: white;
-    cursor: pointer;
+input{
+  flex:1;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:14px;
+}
+
+button{
+  margin-left:8px;
+  border:none;
+  background:var(--accent);
+  color:white;
+  padding:10px 15px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;}
 }
 </style>
 </head>
-
 <body>
 
-<div id="intro">
-    <div class="logo-text">Shaurya's AI</div>
-    <div class="loading-bar"></div>
-</div>
-
-<div class="container">
-<div class="header">Shaurya's AI</div>
-<div class="toggle" onclick="toggleTheme()">Toggle Theme</div>
+<div class="phone">
+<header>Shaurya's AI</header>
 <div class="orb" id="orb"></div>
+
 <div class="chat" id="chat"></div>
 
-<div class="input-panel">
-    <input type="text" id="input" placeholder="Ask something...">
-    <button onclick="send()">Send</button>
-    <button onclick="startVoice()">🎤</button>
+<div class="input-area">
+  <input id="input" placeholder="Type message..." oninput="reactTyping()">
+  <button onclick="send()">Send</button>
 </div>
 </div>
 
 <script>
-
-/* ===== INTRO HIDE ===== */
-window.addEventListener("load", ()=>{
-    setTimeout(()=>{
-        document.getElementById("intro").style.opacity="0";
-        setTimeout(()=>{
-            document.getElementById("intro").style.display="none";
-        },500);
-    },3000);
-});
-
+const orb=document.getElementById("orb");
 const chat=document.getElementById("chat");
 const input=document.getElementById("input");
-const orb=document.getElementById("orb");
 
-/* ===== GREETING DATABASE ===== */
-let greetings=["hi","hello","hey","namaste","good morning","good evening"];
-for(let i=0;i<1000;i++){
-    greetings.push("hi "+i);
-    greetings.push("hello "+i);
-}
-function normalize(t){ return t.toLowerCase().trim(); }
-function isGreeting(t){ return greetings.includes(normalize(t)); }
-
-/* ===== MESSAGE ===== */
-function addMessage(text,type){
-    const msg=document.createElement("div");
-    msg.className="message "+type;
-    msg.textContent=text;
-    chat.appendChild(msg);
-    chat.scrollTop=chat.scrollHeight;
+/* Orb reacts to typing */
+function reactTyping(){
+  if(input.value.length>0){
+    orb.classList.add("typing");
+  }else{
+    orb.classList.remove("typing");
+  }
 }
 
-/* ===== STREAM TEXT ===== */
-function streamText(text){
-    return new Promise(resolve=>{
-        const msg=document.createElement("div");
-        msg.className="message bot";
-        chat.appendChild(msg);
-        let i=0;
-        const interval=setInterval(()=>{
-            msg.textContent+=text[i];
-            i++;
-            chat.scrollTop=chat.scrollHeight;
-            if(i>=text.length){
-                clearInterval(interval);
-                resolve();
-            }
-        },15);
-    });
-}
-
-/* ===== Typing ===== */
-function showTyping(){
-    const div=document.createElement("div");
-    div.className="message bot";
-    div.id="typing";
-    div.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
-    chat.appendChild(div);
-}
-function removeTyping(){
-    const t=document.getElementById("typing");
-    if(t) t.remove();
-}
-
-/* ===== Wikipedia ===== */
-async function searchWikipedia(query){
-    try{
-        const searchUrl=`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`;
-        const searchRes=await fetch(searchUrl);
-        const searchData=await searchRes.json();
-
-        if(!searchData.query.search.length){
-            return "No information found.";
-        }
-
-        const title=searchData.query.search[0].title;
-        const summaryUrl=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
-        const summaryRes=await fetch(summaryUrl);
-        const summaryData=await summaryRes.json();
-
-        return summaryData.extract || "No detailed information available.";
-    }catch{
-        return "Connection error. Use Live Server.";
-    }
-}
-
-/* ===== SEND ===== */
-async function send(){
-    const text=input.value.trim();
-    if(!text) return;
-
-    addMessage(text,"user");
-    input.value="";
-    orb.classList.add("active");
-
-    showTyping();
-
-    let response;
-    if(isGreeting(text)){
-        response="Hello Shaurya. How can I assist you today?";
-    }else{
-        response=await searchWikipedia(text);
-    }
-
-    removeTyping();
-    await streamText(response);
-    speak(response);
-    orb.classList.remove("active");
-}
-
-/* ===== VOICE ===== */
+/* Voice */
 function speak(text){
-    const utter=new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utter);
+  const speech=new SpeechSynthesisUtterance(text);
+  speech.rate=1;
+  speech.pitch=1;
+  window.speechSynthesis.speak(speech);
 }
 
-function startVoice(){
-    const recognition=new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.start();
-    orb.classList.add("active");
-
-    recognition.onresult=function(e){
-        input.value=e.results[0][0].transcript;
-        send();
-    };
+/* Streaming effect */
+function streamText(element,text){
+  let words=text.split(" ");
+  let i=0;
+  let interval=setInterval(()=>{
+    element.innerHTML+=words[i]+" ";
+    i++;
+    if(i>=words.length) clearInterval(interval);
+  },60);
 }
 
-/* ===== ORB REACT ===== */
-input.addEventListener("input",()=>{
-    if(input.value.length>0) orb.classList.add("active");
-    else orb.classList.remove("active");
-});
+function send(){
+  const text=input.value.trim();
+  if(!text) return;
 
-/* ===== THEME ===== */
-function toggleTheme(){
-    document.body.classList.toggle("light");
+  const userMsg=document.createElement("div");
+  userMsg.className="message user";
+  userMsg.innerText=text;
+  chat.appendChild(userMsg);
+
+  input.value="";
+  orb.classList.add("typing");
+
+  /* Typing indicator */
+  const typingDiv=document.createElement("div");
+  typingDiv.className="typing";
+  typingDiv.innerHTML="<div class='dot'></div><div class='dot'></div><div class='dot'></div>";
+  chat.appendChild(typingDiv);
+
+  fetch("/chat",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message:text})
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    chat.removeChild(typingDiv);
+
+    const botMsg=document.createElement("div");
+
+    if(text.toLowerCase().includes("shaurya")){
+      botMsg.className="message bot glow-card";
+      speak("Shaurya Chauhan is the CEO and Founder of Shaurya AI.");
+    }else{
+      botMsg.className="message bot";
+    }
+
+    chat.appendChild(botMsg);
+    streamText(botMsg,data.response);
+
+    orb.classList.remove("typing");
+    chat.scrollTop=chat.scrollHeight;
+  });
 }
-
 </script>
+
 </body>
 </html>
