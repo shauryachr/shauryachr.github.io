@@ -251,6 +251,22 @@ send();
 };
 recognition.start();
 }
+<!-- Keep everything else as in your code -->
+<!-- Add this inside your <script> tag at the bottom -->
+
+/* ORB EASTER EGG */
+const orb=document.querySelector(".orb");
+orb.addEventListener("click",()=>{
+  // Glow pulse animation
+  orb.style.transition="0.3s";
+  orb.style.boxShadow="0 0 100px #00ffff,0 0 200px #00ffff";
+  setTimeout(()=>{
+    orb.style.boxShadow="0 0 40px #00ffff,0 0 80px #00ffff";
+  },500);
+  
+  // Speak "Neuro AI"
+  speak("Neuro AI");
+});
 </script>
 
 </body>
