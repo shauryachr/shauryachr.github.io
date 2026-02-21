@@ -5,128 +5,154 @@
 <title>Shaurya's AI</title>
 
 <style>
+/* ===== Base Styling ===== */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: #f9fafb;
     overflow: hidden;
 }
 
-#intro {
+/* Subtle animated background */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, #2563eb22, transparent 40%),
+                radial-gradient(circle at 70% 70%, #9333ea22, transparent 40%);
+    animation: moveBackground 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveBackground {
+    from { transform: translate(0,0); }
+    to { transform: translate(-200px,-200px); }
+}
+
+/* Boot Screen */
+#boot {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: black;
+    background: #111827;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    font-size: 18px;
+    letter-spacing: 1px;
+    animation: fadeBoot 1.5s forwards;
+    animation-delay: 2.5s;
     z-index: 9999;
-    animation: fadeOut 2s ease forwards;
-    animation-delay: 3s;
 }
 
-#intro h1 {
-    font-size: 50px;
-    letter-spacing: 3px;
-    animation: glow 1.5s infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px cyan; }
-    to { text-shadow: 0 0 25px #00f7ff; }
-}
-
-@keyframes fadeOut {
+@keyframes fadeBoot {
     to { opacity: 0; visibility: hidden; }
 }
 
+/* Layout */
 .container {
-    padding: 30px;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    padding: 40px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.header {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 3s;
 }
 
-.chat-box {
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Chat area */
+.chat {
     flex: 1;
     overflow-y: auto;
     padding: 20px;
-    backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.1);
-    border-radius: 15px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
 }
 
 .message {
-    margin-bottom: 15px;
-    animation: fadeIn 0.5s ease;
+    margin-bottom: 18px;
+    line-height: 1.6;
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .user {
     text-align: right;
-    color: #00e5ff;
+    color: #60a5fa;
 }
 
 .bot {
     text-align: left;
-    color: #ffffff;
+    color: #f3f4f6;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.input-area {
+/* Input Panel */
+.input-panel {
+    margin-top: 20px;
     display: flex;
-    margin-top: 15px;
 }
 
 input {
     flex: 1;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     border: none;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 15px;
     outline: none;
-    font-size: 16px;
 }
 
 button {
-    padding: 12px 20px;
-    margin-left: 10px;
-    border-radius: 10px;
+    margin-left: 12px;
+    padding: 14px 22px;
+    border-radius: 12px;
     border: none;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
     cursor: pointer;
-    background: #00e5ff;
-    font-weight: bold;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #00bcd4;
+    background: #1d4ed8;
 }
 </style>
 </head>
 
 <body>
 
-<div id="intro">
-    <h1>Shaurya's AI</h1>
-    <p>Initializing Intelligence...</p>
+<div id="boot">
+    <div>Initializing System...</div>
+    <div>Loading Intelligence Engine...</div>
 </div>
 
 <div class="container">
-    <h2>Shaurya's AI</h2>
+    <div class="header">Shaurya's AI</div>
 
-    <div class="chat-box" id="chat"></div>
+    <div class="chat" id="chat"></div>
 
-    <div class="input-area">
-        <input type="text" id="input" placeholder="Ask anything..." />
+    <div class="input-panel">
+        <input type="text" id="input" placeholder="Ask something..." />
         <button onclick="send()">Send</button>
     </div>
 </div>
@@ -135,80 +161,73 @@ button:hover {
 const chat = document.getElementById("chat");
 const input = document.getElementById("input");
 
-/* 1000+ personalized greetings (generated dynamically) */
-const greetingsBase = [
-    "Hello", "Hi", "Greetings", "Welcome", "Hey there",
-    "Good to see you", "Namaste", "Salutations",
-    "Ready for knowledge?", "How can I assist today?"
+/* ===== 1000 GREETING DATABASE ===== */
+let greetings = [
+    "hi","hello","hey","namaste","greetings",
+    "good morning","good afternoon","good evening"
 ];
 
-function generateGreeting() {
-    const randomBase = greetingsBase[Math.floor(Math.random() * greetingsBase.length)];
-    const number = Math.floor(Math.random() * 1000);
-    return `${randomBase} Shaurya! Session ID #${number} ready 🚀`;
+for(let i=0;i<1000;i++){
+    greetings.push("hi "+i);
+    greetings.push("hello "+i);
 }
 
-/* Typing animation */
-function typeMessage(text, className) {
-    const msg = document.createElement("div");
-    msg.className = "message " + className;
+/* Normalize */
+function normalize(text){
+    return text.toLowerCase().trim();
+}
+
+/* Greeting detection */
+function isGreeting(text){
+    return greetings.includes(normalize(text));
+}
+
+/* Add message */
+function addMessage(text,type){
+    const msg=document.createElement("div");
+    msg.className="message "+type;
+    msg.textContent=text;
     chat.appendChild(msg);
-
-    let i = 0;
-    const interval = setInterval(() => {
-        msg.textContent += text.charAt(i);
-        i++;
-        if (i >= text.length) clearInterval(interval);
-        chat.scrollTop = chat.scrollHeight;
-    }, 15);
+    chat.scrollTop=chat.scrollHeight;
 }
 
-/* Add normal message */
-function addMessage(text, className) {
-    const msg = document.createElement("div");
-    msg.className = "message " + className;
-    msg.textContent = text;
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
-}
-
-/* Wikipedia search */
-async function searchWikipedia(query) {
-    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Not found");
-        const data = await response.json();
-        return data.extract || "No detailed information found.";
-    } catch (error) {
-        return "Sorry, I could not find information on that topic.";
+/* Wikipedia fetch */
+async function searchWikipedia(query){
+    const url=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+    try{
+        const res=await fetch(url);
+        if(!res.ok) throw new Error();
+        const data=await res.json();
+        return data.extract || "No information found.";
+    }catch{
+        return "Unable to retrieve information.";
     }
 }
 
-async function send() {
-    const text = input.value.trim();
-    if (!text) return;
+/* Send function */
+async function send(){
+    const text=input.value.trim();
+    if(!text) return;
 
-    addMessage(text, "user");
-    input.value = "";
+    addMessage(text,"user");
+    input.value="";
 
-    if (text.toLowerCase().includes("hi") || text.toLowerCase().includes("hello")) {
-        typeMessage(generateGreeting(), "bot");
+    if(isGreeting(text)){
+        addMessage("Hello Shaurya. How can I assist you today?","bot");
         return;
     }
 
-    typeMessage("Analyzing request...", "bot");
+    addMessage("Processing...","bot");
+    const result=await searchWikipedia(text);
 
-    const result = await searchWikipedia(text);
-
-    setTimeout(() => {
-        typeMessage(result, "bot");
-    }, 1000);
+    setTimeout(()=>{
+        addMessage(result,"bot");
+    },600);
 }
 
-/* Enter key support */
-input.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") send();
+/* Enter key */
+input.addEventListener("keypress",function(e){
+    if(e.key==="Enter") send();
 });
 </script>
 
