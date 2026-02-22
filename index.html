@@ -1,53 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shaurya AI</title>
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="app">
 
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <h2>Shaurya AI</h2>
-      <button id="toggleSidebar">☰</button>
-    </div>
-    <div class="history" id="history"></div>
-  </aside>
+  <header class="header">
+    <div class="logo">Shaurya AI</div>
+  </header>
 
-  <main class="main">
+  <main class="chat-container" id="chat"></main>
 
-    <div class="window-controls">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-    </div>
+  <div class="typing" id="typing">AI is typing...</div>
 
-    <div class="chat" id="chat"></div>
-
-    <div class="typing" id="typing">AI is typing<span>.</span><span>.</span><span>.</span></div>
-
-    <div class="input-area">
-      <input id="input" placeholder="Ask something..." />
-      <button id="voiceBtn">🎤</button>
-      <button id="sendBtn">Send</button>
-    </div>
-
-    <div class="footer">
-      <a href="about.html">About Me</a>
-    </div>
-
-  </main>
+  <footer class="input-area">
+    <input type="text" id="input" placeholder="Message Shaurya AI..." autocomplete="off">
+    <button id="send">Send</button>
+  </footer>
 
 </div>
 
-<script src="config.js"></script>
-<script src="wiki.js"></script>
-<script src="ui.js"></script>
-<script src="app.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
