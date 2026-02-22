@@ -1,52 +1,50 @@
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-const sendBtn = document.getElementById("send");
-const typing = document.getElementById("typing");
+document.getElementById('ask').addEventListener('click', async () => {
+    const queryInput = document.getElementById('query');
+    const query = queryInput.value.trim().toLowerCase();
+    if (!query) return;
 
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter") sendMessage();
-});
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '<div style="text-align:center; padding:30px;">Loading...</div>';
+    resultDiv.classList.add('visible');
 
-function addMessage(text, type) {
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
-
-  addMessage(text, "user");
-  input.value = "";
-  typing.style.display = "block";
-
-  setTimeout(async () => {
-    let response;
-
-    if (text.toLowerCase().includes("who is shaurya")) {
-      response = "Shaurya Chauhan is the founder and CEO of Shaurya AI.";
-    } else {
-      response = await fetchWiki(text);
+    // Special case: Who is Shaurya Chauhan
+    if (
+        query.includes('who is shaurya chauhan') ||
+        query.includes('shaurya chauhan') && (query.includes('who') || query.includes('ceo') || query.includes('founder'))
+    ) {
+        resultDiv.innerHTML = `
+            <h2>Shaurya Chauhan</h2>
+            <p class="special-answer">Shaurya Chauhan is the CEO of Shaurya AI.</p>
+            <p>He's leading the vision behind this very interface you're using right now!</p>
+        `;
+        queryInput.value = ''; // optional: clear input after special answer
+        return;
     }
 
-    typing.style.display = "none";
-    addMessage(response, "ai");
-  }, 600);
-}
+    // Normal Wikipedia flow
+    try {
+        const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(queryInput.value)}&format=json&origin=*`;
+        const searchRes = await fetch(searchUrl);
+        const searchData = await searchRes.json();
 
-async function fetchWiki(query) {
-  try {
-    const res = await fetch(
-      "https://en.wikipedia.org/api/rest_v1/page/summary/" +
-      encodeURIComponent(query)
-    );
-    const data = await res.json();
-    return data.extract || "No reliable information found.";
-  } catch {
-    return "Error fetching information.";
-  }
-}
+        if (searchData.query.search.length === 0) {
+            resultDiv.innerHTML = '<p>No matching articles found on Wikipedia.</p>';
+            return;
+        }
+
+        const title = searchData.query.search[0].title;
+
+        const extractUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles=${encodeURIComponent(title)}&format=json&origin=*`;
+        const extractRes = await fetch(extractUrl);
+        const extractData = await extractRes.json();
+        const page = Object.values(extractData.query.pages)[0];
+
+        resultDiv.innerHTML = `
+            <h2>${title}</h2>
+            <p>${page.extract || 'No summary available.'}</p>
+            <small style="opacity:0.7;">Source: Wikipedia</small>
+        `;
+    } catch (err) {
+        resultDiv.innerHTML = '<p style="color:#ff5555;">Failed to connect to Wikipedia. Try again!</p>';
+    }
+});
