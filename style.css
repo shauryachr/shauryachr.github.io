@@ -5,7 +5,9 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #121212;
     color: #fff;
-    overflow: hidden;
+    min-height: 100vh; /* Ensures full viewport height for scrolling */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto; /* Enable vertical scroll */
 }
 
 header {
@@ -46,6 +48,7 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 40px 20px;
+    min-height: calc(100vh - 200px); /* Adjust for header, ensures room for scroll */
 }
 
 .search-bar {
@@ -102,6 +105,23 @@ button:hover {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s ease;
+    max-height: 70vh; /* Limit height to encourage page scroll if very long */
+    overflow-y: auto; /* Internal scroll for extremely long content */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ff00cc #333; /* Firefox */
+}
+
+.result-card::-webkit-scrollbar {
+    width: 8px; /* Webkit */
+}
+
+.result-card::-webkit-scrollbar-track {
+    background: #333;
+}
+
+.result-card::-webkit-scrollbar-thumb {
+    background: #ff00cc;
+    border-radius: 4px;
 }
 
 .result-card.visible {
@@ -118,6 +138,7 @@ button:hover {
 .result-card p {
     line-height: 1.8;
     font-size: 1.15em;
+    margin-bottom: 10px;
 }
 
 .special-answer {
@@ -132,4 +153,5 @@ button:hover {
     .search-bar { flex-direction: column; }
     input { border-radius: 60px; border-right: 2px solid #ff00cc; margin-bottom: 15px; }
     button { border-radius: 60px; }
+    .result-card { max-height: 60vh; } /* Tighter on mobile */
 }
