@@ -35,35 +35,22 @@
                 <label for="your-name">Your Name / Alias *</label>
                 <input type="text" id="your-name" name="name" required placeholder="e.g. NeonCreator">
 
-                <label for="page-slug">Desired URL slug (lowercase, hyphens only) *</label>
+                <label for="page-slug">Desired URL Slug (lowercase, hyphens only) *</label>
                 <input type="text" id="page-slug" name="slug" required placeholder="my-glowing-portfolio" pattern="[a-z0-9-]+" title="Only lowercase letters, numbers, hyphens">
 
                 <label for="page-title">Page Title *</label>
                 <input type="text" id="page-title" name="title" required placeholder="My Awesome Neon Landing Page">
 
                 <label for="html-code">HTML Code *</label>
-                <textarea id="html-code" name="html" rows="12" required placeholder='<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Your Title</title>\n  ...\n</head>\n<body>\n  ...\n</body>\n</html>'></textarea>
+                <textarea id="html-code" name="html" rows="12" required placeholder='<!DOCTYPE html> ... your full code here ...'></textarea>
 
                 <label for="css-code">CSS Code (optional)</label>
-                <textarea id="css-code" name="css" rows="10" placeholder='body { background: #000; color: #0ff; } ...'></textarea>
+                <textarea id="css-code" name="css" rows="10" placeholder='body { background: #000; ... }'></textarea>
 
                 <label for="js-code">JavaScript Code (optional)</label>
-                <textarea id="js-code" name="js" rows="10" placeholder='console.log("Hello from user page!"); ...'></textarea>
+                <textarea id="js-code" name="js" rows="10" placeholder='console.log("Hello!"); ...'></textarea>
 
-                <label for="description">Description / Notes for review (optional)</label>
-                <textarea id="description" name="notes" rows="5" placeholder="This is a fun neon particle effect. No external resources used..."></textarea>
+                <label for="description">Description / Notes (optional)</label>
+                <textarea id="description" name="notes" rows="5" placeholder="Particle background experiment..."></textarea>
 
-                <!-- honeypot spam trap -->
                 <input type="text" name="_gotcha" style="display:none !important;">
-
-                <button type="submit" class="neon-btn submit-btn">Send Submission</button>
-            </form>
-
-            <p style="margin-top:30px; font-size:0.95em; opacity:0.8; text-align:center;">
-                Code must be safe & clean (no trackers, malicious scripts, ads, inappropriate content).<br>
-                Submissions are manually reviewed — no automatic publishing.
-            </p>
-        </section>
-    </main>
-</body>
-</html>
