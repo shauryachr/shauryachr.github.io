@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Shaurya Chauhan | Shaurya AI</title>
+    <link rel="stylesheet" href="style-about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Neon:wght@400;700&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <header>
+        <div class="profile-container">
+            <h1>Shaurya Chauhan</h1>
+            <p class="tagline">Founder & CEO of Shaurya AI | Web Developer | Innovator</p>
+            <p class="location">Sikar, Rajasthan, India</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="bio-card">
+            <h2>About Me</h2>
+            <p>
+                I'm Shaurya Chauhan, the mind behind <strong>Shaurya AI</strong> — building futuristic, AI-powered interfaces and tools that blend creativity with cutting-edge technology.<br><br>
+                Passionate about web development, artificial intelligence, innovation, and turning bold ideas into reality. Whether it's crafting glowing neon UIs, experimenting with AI integrations, or exploring the next big thing in tech — I'm all in.<br><br>
+                When not coding or leading Shaurya AI, you'll find me diving into music, staying updated with the latest in tech & fashion, or brainstorming the future.
+            </p>
+        </section>
+
+        <section class="interests">
+            <h2>Interests & Skills</h2>
+            <div class="tags">
+                <span>Web Development</span>
+                <span>Artificial Intelligence</span>
+                <span>UI/UX Design</span>
+                <span>Innovation</span>
+                <span>Music</span>
+                <span>Technology</span>
+                <span>Fashion</span>
+                <span>Entrepreneurship</span>
+            </div>
+        </section>
+
+        <section class="connect">
+            <h2>Let's Connect</h2>
+            <p>Have an idea? Want to collaborate? Or just say hi?</p>
+            <a href="mailto:your.email@example.com" class="btn neon-btn">Email Me</a>
+            <!-- Add real links when ready -->
+            <div class="social-links">
+                <a href="https://x.com/yourhandle" target="_blank">X / Twitter</a>
+                <a href="https://linkedin.com/in/shauryachauhan" target="_blank">LinkedIn</a>
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Shaurya Chauhan | Powered by Shaurya AI</p>
+    </footer>
+
+    <script>
+        // Simple scroll reveal animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.bio-card, .interests, .connect').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
