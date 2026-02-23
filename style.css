@@ -57,9 +57,10 @@ p {
     display: flex;
     gap: 15px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.about-btn, .submit-btn.neon-btn {
+.about-btn, .submit-btn.neon-btn, .join-btn.neon-btn {
     padding: 14px 32px;
     border-radius: 50px;
     text-decoration: none;
@@ -89,6 +90,20 @@ p {
 .submit-btn:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 0 35px rgba(255, 0, 204, 0.7);
+    background-position: 100% 50%;
+}
+
+.join-btn.neon-btn {
+    background: linear-gradient(90deg, #ffcc00, #ff6600);
+    background-size: 200% 200%;
+    animation: gradientFlow 8s ease infinite;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+.join-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 102, 0, 0.7);
     background-position: 100% 50%;
 }
 
@@ -197,7 +212,8 @@ button:hover {
     text-shadow: 0 0 10px #00ffcc;
 }
 
-/* Submit section styles */
+/* ── Shared form styles (used in submit.html & join-about.html) ──────────────── */
+
 .submit-section {
     width: 90%;
     max-width: 1100px;
@@ -220,6 +236,7 @@ button:hover {
     text-align: center;
     line-height: 1.6;
     margin-bottom: 35px;
+    font-size: 1.1rem;
 }
 
 .submit-section label {
@@ -234,22 +251,53 @@ button:hover {
 .submit-section textarea {
     width: 100%;
     padding: 14px 18px;
-    background: rgba(20, 20,
-.join-btn.neon-btn {
-    padding: 14px 32px;
-    background: linear-gradient(90deg, #ffcc00, #ff6600);
-    background-size: 200% 200%;
-    animation: gradientFlow 8s ease infinite;
-    color: #000;
-    font-weight: 600;
-    border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
-    transition: all 0.4s;
+    background: rgba(20, 20, 40, 0.7);
+    border: 1px solid #333399;
+    border-radius: 12px;
+    color: #fff;
+    font-family: monospace;
+    font-size: 1rem;
+    transition: border 0.3s;
 }
 
-.join-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 0 35px rgba(255, 102, 0, 0.7);
-    background-position: 100% 50%;
+.submit-section input:focus,
+.submit-section textarea:focus {
+    border-color: #00ffcc;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+}
+
+.submit-section textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.submit-btn.neon-btn {
+    margin-top: 40px;
+    width: 100%;
+    padding: 20px;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, #ff00cc, #00ffcc, #333399);
+    background-size: 200% 200%;
+    animation: gradientFlow 10s ease infinite;
+}
+
+.submit-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.6);
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 3.5em; }
+    .header-content { flex-direction: column; text-align: center; }
+    .header-buttons { flex-direction: column; width: 100%; gap: 12px; }
+    .about-btn, .submit-btn.neon-btn, .join-btn.neon-btn {
+        width: 100%;
+        padding: 16px;
+        font-size: 1.1rem;
+    }
+    .search-bar { flex-direction: column; }
+    input { border-radius: 60px; border-right: 2px solid #ff00cc; margin-bottom: 15px; }
+    button { border-radius: 60px; width: 100%; }
+    .result-card { max-height: 60vh; }
 }
