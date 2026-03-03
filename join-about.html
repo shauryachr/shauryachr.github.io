@@ -22,13 +22,11 @@
             <h2>Apply for Your Personal About Page</h2>
             <p>
                 Fill in your details below.<br>
-                Your submission will be sent to <strong>shauryachr@gmail.com</strong>.<br>
-                If approved, you'll get your own "About Me" style page hosted here!<br>
-                (Example: https://&lt;your-github-username&gt;.github.io/shaurya-ai/about-users/your-name.html)
+                Your submission will be emailed instantly to shauryachr@gmail.com.<br>
+                If approved, you'll get your own beautiful "About Me" page!
             </p>
 
             <form action="https://api.staticforms.dev/submit" method="POST">
-                <!-- Your existing Static Forms API key -->
                 <input type="hidden" name="apiKey" value="sf_kb1n1nc33dnjl8a0h747i9ba">
                 <input type="hidden" name="subject" value="New About Me Application – Shaurya AI">
 
@@ -36,7 +34,7 @@
                 <input type="text" id="full-name" name="name" required placeholder="Your full name">
 
                 <label for="address">Address / City, State, Country *</label>
-                <input type="text" id="address" name="address" required placeholder="e.g. Sikar, Rajasthan, India">
+                <input type="text" id="address" name="address" required placeholder="e.g. CUH, India">
 
                 <label for="phone">Phone Number (with country code) *</label>
                 <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
@@ -44,25 +42,22 @@
                 <label for="email">Email Address *</label>
                 <input type="email" id="email" name="email" required placeholder="your.email@example.com">
 
-                <label for="bio">Short Bio / About Yourself (200-400 words) *</label>
-                <textarea id="bio" name="bio" rows="10" required placeholder="Tell us about yourself: interests, skills, what you do, why you want an About page here..."></textarea>
+                <label for="bio">Short Bio / About Yourself *</label>
+                <textarea id="bio" name="bio" rows="10" required placeholder="Tell us about yourself..."></textarea>
 
-                <label for="preferred-slug">Preferred URL Slug (lowercase, hyphens only – optional)</label>
-                <input type="text" id="preferred-slug" name="slug" placeholder="your-name-or-nickname" pattern="[a-z0-9-]+" title="Only lowercase letters, numbers, hyphens">
+                <label for="preferred-slug">Preferred URL Slug (optional)</label>
+                <input type="text" id="preferred-slug" name="slug" placeholder="your-name-or-nickname" pattern="[a-z0-9-]+">
 
-                <label for="extra-notes">Any extra notes or links (optional)</label>
-                <textarea id="extra-notes" name="notes" rows="4" placeholder="Social links, photo URL if you want one included, etc..."></textarea>
+                <label for="extra-notes">Extra notes or links (optional)</label>
+                <textarea id="extra-notes" name="notes" rows="4" placeholder="Social links, photo URL..."></textarea>
 
-                <!-- Honeypot for spam -->
                 <input type="text" name="_gotcha" style="display:none !important;">
 
                 <button type="submit" class="neon-btn submit-btn">Submit Application</button>
             </form>
 
             <p style="margin-top:30px; font-size:0.95em; opacity:0.8; text-align:center;">
-                Important: All submissions are manually reviewed.<br>
-                Provide real & respectful information only. No spam or fake details.<br>
-                Phone/email used only for verification — not shared publicly.
+                All submissions are manually reviewed. Provide real & respectful information only.
             </p>
         </section>
     </main>
